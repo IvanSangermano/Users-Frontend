@@ -110,7 +110,7 @@ export const createUserAsync = (user) => async (dispatch) => {
       user
     );
     if (res.status === 201) {
-      return dispatch(createUser(res.data));
+      return dispatch(createUser(res.data.datos));
     }
   } catch (error) {
     return dispatch(setError(error?.response?.data?.error));
@@ -121,11 +121,11 @@ export const updateUserAsync = (user) => async (dispatch) => {
   try {
     const res = await axios.put(
       // eslint-disable-next-line no-undef
-      `${process.env.REACT_APP_BACKEND_URL_PORT}/users/${user.id}`,
+      `${process.env.REACT_APP_BACKEND_URL_PORT}/users/${user._id}`,
       user
     );
     if (res.status === 200) {
-      return dispatch(updateUser(res.data));
+      return dispatch(updateUser(res.data.datos));
     }
   } catch (error) {
     return dispatch(setError(error?.response?.data?.error));

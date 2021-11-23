@@ -21,7 +21,7 @@ export const MainRouter = () => {
             <Route exact path="/users">
               <UserScreen />
             </Route>
-            <Route exact path="/users/:action/:technicianId?">
+            <Route exact path="/users/:action/:userId?">
               <UserForm />
             </Route>
             <Redirect to="/home" />

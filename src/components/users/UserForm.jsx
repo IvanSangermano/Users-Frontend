@@ -34,7 +34,7 @@ export const UserForm = () => {
   };
   const handleFormSubmit = (user) => {
     if (actionInProgress === UPDATE) {
-      user.id = selectedUser.id;
+      user._id = selectedUser._id;
       dispatch(updateUserAsync(user));
     } else {
       dispatch(createUserAsync(user));

@@ -38,8 +38,7 @@ import {
           ...state,
           error: '',
           list: state.list.map((user) =>
-          user.id === action.payload.id ? action.payload : user
-          ),
+            user._id === action.payload._id ? action.payload : user),
           isLoading: false,
           actionInProgress: NONE,
           selectedUser: null,
@@ -48,7 +47,7 @@ import {
         return {
           ...state,
           error: '',
-          list: state.list.filter((user) => user.id !== action.payload),
+          list: state.list.filter((user) => user._id !== action.payload),
           isLoading: false,
           actionInProgress: NONE,
           selectedUser: null,
