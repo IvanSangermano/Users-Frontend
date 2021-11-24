@@ -12,8 +12,6 @@ import {
   } from '../types/usersType.js';
   import { UPDATE, DELETE, CREATE, NONE } from '../types/modalTypes';
 
-
-
   const initialState = {
     list: [],
     error: '',

@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from './UserForm.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   updateUserAsync,
   createUserAsync,
   unsetAction,
 } from '../../redux/actions/usersAction';
-import { useDispatch } from 'react-redux';
 import Button from '@mui/lab/LoadingButton';
 import { GenericModal } from '../shared/GenericModal';
 import { UPDATE } from '../../redux/types/modalTypes';
