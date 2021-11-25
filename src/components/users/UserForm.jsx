@@ -12,6 +12,12 @@ import { UPDATE } from '../../redux/types/modalTypes';
 import { Form, Field } from 'react-final-form';
 import { TextInput } from '../shared/TextInput';
 import { ErrorContainer } from '../shared/ErrorContainer';
+import {
+  mustBeNumber,
+  required,
+  mustBe8Digit,
+  composeValidators,
+} from '../validations/FormValidation';
 
 const initialState = {
   name: '',
@@ -24,13 +30,15 @@ const initialState = {
 export const UserForm = () => {
   const { actionInProgress, selectedUser, isLoading, error } =
     useSelector((state) => state.users);
+
   const dispatch = useDispatch();
-  let action =
-    actionInProgress.charAt(0) + actionInProgress.toLowerCase().slice(1);
+
+  let action = actionInProgress.charAt(0) + actionInProgress.toLowerCase().slice(1);
 
   const handleCancel = () => {
     dispatch(unsetAction());
   };
+
   const handleFormSubmit = (user) => {
     if (actionInProgress === UPDATE) {
       user._id = selectedUser._id;
@@ -39,7 +47,7 @@ export const UserForm = () => {
       dispatch(createUserAsync(user));
     }
   };
-  const required = (value) => (value ? undefined : 'Required');
+
   return (
     <GenericModal>
       <>
@@ -48,6 +56,7 @@ export const UserForm = () => {
         <Form
           onSubmit={handleFormSubmit}
           initialValues={selectedUser || initialState}
+
         >
           {({ handleSubmit, submitting }) => (
             <form onSubmit={handleSubmit}>
@@ -67,7 +76,7 @@ export const UserForm = () => {
               </div>
 
               <div>
-                <Field name="telephone" validate={required}>
+                <Field name="telephone" validate={composeValidators(required, mustBeNumber)}>
                   {({ input, meta }) => (
                     <TextInput input={input} meta={meta} name="Phone" />
                   )}
@@ -81,7 +90,7 @@ export const UserForm = () => {
                 </Field>
               </div>
               <div>
-                <Field name="dni" validate={required}>
+                <Field name="dni" validate={composeValidators(required, mustBeNumber, mustBe8Digit)}>
                   {({ input, meta }) => (
                     <TextInput input={input} meta={meta} name="DNI" />
                   )}
