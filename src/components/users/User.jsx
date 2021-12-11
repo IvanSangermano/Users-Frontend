@@ -9,7 +9,7 @@ import {
   setUpdateAction,
 } from '../../redux/actions/usersAction';
 
-export const User = ({ user }) => {
+export const User = ({ user, isLoggedIn }) => {
   const { name, lastName, dni, telephone} = user;
   const dispatch = useDispatch();
   return (
@@ -26,20 +26,24 @@ export const User = ({ user }) => {
         <span className={styles.title}>Phone</span>
         <span className={styles.content}>{telephone}</span>
       </div>
-      <div className={styles.actions}>
-        <EditIcon
-          className={styles.editIcon}
-          onClick={() => dispatch(setUpdateAction(user))}
-        />
-        <DeleteIcon
-          className={styles.deleteIcon}
-          onClick={() => dispatch(setDeleteAction(user))}
-        />
-      </div>
+      {
+        isLoggedIn &&
+        <div className={styles.actions}>
+          <EditIcon
+            className={styles.editIcon}
+            onClick={() => dispatch(setUpdateAction(user))}
+          />
+          <DeleteIcon
+            className={styles.deleteIcon}
+            onClick={() => dispatch(setDeleteAction(user))}
+          />
+        </div>
+      }
     </div>
   );
 };
 
 User.propTypes = {
   user: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.string.isRequired,
 };

@@ -9,6 +9,9 @@ import {
     USER_SET_UPDATE_ACTION,
     USER_SET_DELETE_ACTION,
     USER_UNSET_ACTION,
+    USER_LOGIN,
+    SET_USER_CREDENTIALS,
+    LOGOUT
   } from '../types/usersType.js';
   import { UPDATE, DELETE, CREATE, NONE } from '../types/modalTypes';
 
@@ -18,6 +21,10 @@ import {
     isLoading: false,
     actionInProgress: NONE,
     selectedUser: null,
+    credentials: {
+      user: null,
+      token: ''
+    }
   };
   
   export const usersReducer = (state = initialState, action) => {
@@ -31,6 +38,24 @@ import {
           actionInProgress: NONE,
           selectedUser: null,
         };
+      case LOGOUT:
+        return {
+          ...state,
+          credentials: undefined
+        }
+      case USER_LOGIN:
+        return {
+          ...state,
+          credentials: action.payload
+        }
+        case SET_USER_CREDENTIALS:
+        return {
+          ...state,
+          credentials: {
+            ...state.credentials,
+            user: action.payload
+          }
+        }
       case USER_UPDATE_USER:
         return {
           ...state,

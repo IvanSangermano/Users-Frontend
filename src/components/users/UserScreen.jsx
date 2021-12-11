@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { UserList } from './UserList';
 import styles from './UserScreen.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { CREATE, DELETE, UPDATE } from '../../redux/types/modalTypes';
 import { ConfirmDelete } from './ConfirmDelete';
 import { UserForm } from './UserForm';
-import { setCreateAction } from '../../redux/actions/usersAction';
+import { getUsersAsync, setCreateAction } from '../../redux/actions/usersAction';
 
 export const UserScreen = () => {
   const dispatch = useDispatch();
@@ -15,18 +15,26 @@ export const UserScreen = () => {
     isLoading,
     actionInProgress,
     selectedUser,
+    credentials
   } = useSelector((state) => state.users);
 
   const handleAddClick = () => {
     dispatch(setCreateAction());
   };
+  
+  useEffect(()=>{
+    dispatch(getUsersAsync());
+  }, [])
 
   return (
     <div>
       <h2>Users</h2>
-      <button className={styles.newButton} onClick={handleAddClick}>
-        New User
-      </button>
+      {
+        credentials.user &&
+        <button className={styles.newButton} onClick={handleAddClick}>
+          New User
+        </button>
+      }
       {(actionInProgress === UPDATE || actionInProgress === CREATE) && (
         <UserForm />
       )}
