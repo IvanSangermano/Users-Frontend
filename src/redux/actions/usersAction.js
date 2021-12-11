@@ -10,12 +10,23 @@ import {
     USER_SET_UPDATE_ACTION,
     USER_SET_DELETE_ACTION,
     USER_UNSET_ACTION,
+    USER_LOGIN,
+    SET_USER_CREDENTIALS,
+    LOGOUT
   } from '../types/usersType.js';
+import {getConfig} from '../../helpers/axiosConfig';
 
 export const createUser = (user) => {
   return {
     type: USER_CREATE_USER,
     payload: user,
+  };
+};
+export const logout = () => {
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('user');
+  return {
+    type: LOGOUT,
   };
 };
 export const updateUser = (user) => {
@@ -69,8 +80,40 @@ export const unsetAction = () => {
     type: USER_UNSET_ACTION,
   };
 };
-export const getUsersAsync = () => async (dispatch) => {
+export const userLoginAction = (credentials) => {
+  return {
+    type: USER_LOGIN,
+    payload: credentials
+  };
+};
+export const setUserCredentials = (user) => {
+  return {
+    type: SET_USER_CREDENTIALS,
+    payload: user
+  };
+};
+export const login = (email, password) => async (dispatch) => {
   dispatch(setLoadingTrue());
+  const payload = { email, password }
+  try {
+    const res = await axios.post(
+      // eslint-disable-next-line no-undef
+      `${process.env.REACT_APP_BACKEND_URL_PORT}/users/login`,
+      payload
+    )
+
+    if(res.status === 200) {
+      const { data } = res
+      localStorage.setItem('auth_token', data.token)
+      localStorage.setItem('user', JSON.stringify(data.user))
+      dispatch(userLoginAction(data))
+    }
+
+  } catch (error){
+    dispatch(setError(error?.response?.data?.error));
+  }
+}
+export const getUsersAsync = () => async (dispatch) => {
   try {
     const res = await axios.get(
       // eslint-disable-next-line no-undef
@@ -92,12 +135,16 @@ export const deleteUserAsync = (userId) => async (dispatch) => {
   try {
     const res = await axios.delete(
       // eslint-disable-next-line no-undef
-      `${process.env.REACT_APP_BACKEND_URL_PORT}/users/${userId}`
+      `${process.env.REACT_APP_BACKEND_URL_PORT}/users/${userId}`,
+      getConfig()
     );
     if (res.status === 200) {
       dispatch(deleteUser(userId));
     }
   } catch (error) {
+    if (error.message === 'auth_error') {
+      return dispatch(logout())
+    }
     dispatch(setError(error?.response?.data?.error));
   }
 };
@@ -107,12 +154,16 @@ export const createUserAsync = (user) => async (dispatch) => {
     const res = await axios.post(
       // eslint-disable-next-line no-undef
       `${process.env.REACT_APP_BACKEND_URL_PORT}/users`,
-      user
+      user,
+      getConfig()
     );
     if (res.status === 201) {
       return dispatch(createUser(res.data.datos));
     }
   } catch (error) {
+    if (error.message === 'auth_error') {
+      return dispatch(logout())
+    }
     return dispatch(setError(error?.response?.data?.error));
   }
 };
@@ -122,12 +173,16 @@ export const updateUserAsync = (user) => async (dispatch) => {
     const res = await axios.put(
       // eslint-disable-next-line no-undef
       `${process.env.REACT_APP_BACKEND_URL_PORT}/users/${user._id}`,
-      user
+      user,
+      getConfig()
     );
     if (res.status === 200) {
       return dispatch(updateUser(res.data.datos));
     }
   } catch (error) {
+    if (error.message === 'auth_error') {
+      return dispatch(logout())
+    }
     return dispatch(setError(error?.response?.data?.error));
   }
 };

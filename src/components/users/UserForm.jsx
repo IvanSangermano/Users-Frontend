@@ -8,7 +8,7 @@ import {
 } from '../../redux/actions/usersAction';
 import Button from '@mui/lab/LoadingButton';
 import { GenericModal } from '../shared/GenericModal';
-import { UPDATE } from '../../redux/types/modalTypes';
+import { UPDATE, CREATE } from '../../redux/types/modalTypes';
 import { Form, Field } from 'react-final-form';
 import { TextInput } from '../shared/TextInput';
 import { ErrorContainer } from '../shared/ErrorContainer';
@@ -24,7 +24,9 @@ const initialState = {
   lastName: '',
   telephone: '',
   direction: '',
-  dni: ''
+  dni: '',
+  email: '',
+  password: ''
 };
 
 export const UserForm = () => {
@@ -96,6 +98,20 @@ export const UserForm = () => {
                   )}
                 </Field>
               </div>
+              <div>
+                <Field name="email">
+                  {({ input, meta }) => (
+                    <TextInput input={input} meta={meta} name="Email" />
+                  )}
+                </Field>
+              </div>
+              {actionInProgress === CREATE && <div>
+                <Field name="password">
+                  {({ input, meta }) => (
+                    <TextInput input={input} meta={meta} name="Password" />
+                  )}
+                </Field>
+              </div>}
               <div className={styles.actionsContainer}>
                 <Button
                   disabled={submitting}

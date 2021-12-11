@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
 } from 'react-router-dom';
 import { UserForm } from '../components/users/UserForm';
 import { UserScreen } from '../components/users/UserScreen';
@@ -28,7 +27,6 @@ export const MainRouter = () => {
           <Route exact path="/users/:action/:userId?">
             <UserForm />
           </Route>
-          <Redirect to="/" />
         </Layout>
       </Switch>
     </Router>
