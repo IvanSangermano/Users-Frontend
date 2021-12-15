@@ -34,8 +34,7 @@ export const Login = () => {
 
   const handleLogin = async () => {
     if (!email || !password) return;
-    dispatch(login(email, password))
-    history.replace('/home')
+    dispatch(login(email, password, history))
   }
 
   return (

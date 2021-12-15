@@ -92,7 +92,7 @@ export const setUserCredentials = (user) => {
     payload: user
   };
 };
-export const login = (email, password) => async (dispatch) => {
+export const login = (email, password, history) => async (dispatch) => {
   dispatch(setLoadingTrue());
   const payload = { email, password }
   try {
@@ -107,6 +107,7 @@ export const login = (email, password) => async (dispatch) => {
       localStorage.setItem('auth_token', data.token)
       localStorage.setItem('user', JSON.stringify(data.user))
       dispatch(userLoginAction(data))
+      history.replace('/home')
     }
 
   } catch (error){
@@ -158,7 +159,7 @@ export const createUserAsync = (user) => async (dispatch) => {
       getConfig()
     );
     if (res.status === 201) {
-      return dispatch(createUser(res.data.datos));
+      return dispatch(createUser(res.data.data));
     }
   } catch (error) {
     if (error.message === 'auth_error') {
@@ -177,7 +178,8 @@ export const updateUserAsync = (user) => async (dispatch) => {
       getConfig()
     );
     if (res.status === 200) {
-      return dispatch(updateUser(res.data.datos));
+      console.log(JSON.stringify(res.data,null,2))
+      return dispatch(updateUser(res.data.data));
     }
   } catch (error) {
     if (error.message === 'auth_error') {
