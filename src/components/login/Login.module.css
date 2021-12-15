@@ -12,7 +12,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-size: 1.2rem;
   color: whitesmoke;
-  margin-bottom: 150px;
+  margin-bottom: 110px;
 }
 .containerActions button {
   margin-left: 20px;
@@ -32,8 +32,8 @@ body {
 }
 
 .paperStyle {
-  padding: 20;
-  height: '70vh';
-  width: 280;
-  margin: '20px auto';
+  padding: 1.8rem;
+  height: 45vh;
+  width: 25vw;
+  margin: 20px auto;
 }

@@ -27,8 +27,8 @@ export const Login = () => {
 
   const handleLogin = async () => {
     if (!email || !password) return;
-    dispatch(login(email, password, history))
-  }
+    dispatch(login(email, password, history));
+  };
 
   return (
     <Grid>
@@ -55,6 +55,7 @@ export const Login = () => {
           value={email}
         />
         <TextField
+          style={{ marginTop: '1.1rem' }}
           label="Password"
           placeholder="Enter password"
           type="password"
