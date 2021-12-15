@@ -16,7 +16,6 @@ export const Login = () => {
   const btnstyle = { margin: '50px 0' };
 
   useEffect(() => {
-    // dispatch(getUsersAsync());
     const userSerialized = localStorage.getItem('user');
     if (userSerialized) {
       const user = JSON.parse(userSerialized);
@@ -28,9 +27,8 @@ export const Login = () => {
 
   const handleLogin = async () => {
     if (!email || !password) return;
-    dispatch(login(email, password));
-    history.replace('/home');
-  };
+    dispatch(login(email, password, history))
+  }
 
   return (
     <Grid>

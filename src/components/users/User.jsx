@@ -10,10 +10,10 @@ import {
 } from '../../redux/actions/usersAction';
 
 export const User = ({ user, isLoggedIn }) => {
-  const { name, lastName, dni, telephone} = user;
+  const { name, lastName, dni, telephone, _id} = user;
   const dispatch = useDispatch();
   return (
-    <div className={styles.container}>
+    <div className={styles.container} key={_id}>
       <div className={styles.column}>
         <span className={styles.title}>Full name</span>
         <span className={styles.content}>{name + ' ' + lastName}</span>
@@ -33,10 +33,14 @@ export const User = ({ user, isLoggedIn }) => {
             className={styles.editIcon}
             onClick={() => dispatch(setUpdateAction(user))}
           />
-          <DeleteIcon
-            className={styles.deleteIcon}
-            onClick={() => dispatch(setDeleteAction(user))}
-          />
+          {
+            isLoggedIn != _id &&
+            <DeleteIcon
+              className={styles.deleteIcon}
+              onClick={() => dispatch(setDeleteAction(user))}
+            />
+          }
+          
         </div>
       }
     </div>

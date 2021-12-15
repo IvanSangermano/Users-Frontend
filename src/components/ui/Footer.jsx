@@ -6,7 +6,7 @@ export const Footer = () => {
     <div className={styles.header}>
         <footer>          
             <p>
-                Parcial Nº2 - Modelo computacional de Gestion Empresarial - Ivan Sangermano
+                Parcial Nº2 - Modelo computacional de Gestion Empresarial - Ivan Sangermano / Matias Virgili
             </p>
         </footer>
     </div>
