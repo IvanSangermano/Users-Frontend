@@ -12,7 +12,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-size: 1.2rem;
   color: whitesmoke;
-  margin-bottom: 70px;
+  margin-bottom: 150px;
 }
 .containerActions button {
   margin-left: 20px;
@@ -21,6 +21,9 @@ body {
   color: whitesmoke;
   cursor: pointer;
   transition-duration: 0.3s;
+  padding: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
 }
 
 .containerActions button:hover {

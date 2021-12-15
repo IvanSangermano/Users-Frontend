@@ -9,11 +9,11 @@ import {
   setUpdateAction,
 } from '../../redux/actions/usersAction';
 
-export const User = ({ user }) => {
-  const { name, lastName, dni, telephone} = user;
+export const User = ({ user, isLoggedIn }) => {
+  const { name, lastName, dni, telephone, _id} = user;
   const dispatch = useDispatch();
   return (
-    <div className={styles.container}>
+    <div className={styles.container} key={_id}>
       <div className={styles.column}>
         <span className={styles.title}>Full name</span>
         <span className={styles.content}>{name + ' ' + lastName}</span>
@@ -26,20 +26,28 @@ export const User = ({ user }) => {
         <span className={styles.title}>Phone</span>
         <span className={styles.content}>{telephone}</span>
       </div>
-      <div className={styles.actions}>
-        <EditIcon
-          className={styles.editIcon}
-          onClick={() => dispatch(setUpdateAction(user))}
-        />
-        <DeleteIcon
-          className={styles.deleteIcon}
-          onClick={() => dispatch(setDeleteAction(user))}
-        />
-      </div>
+      {
+        isLoggedIn &&
+        <div className={styles.actions}>
+          <EditIcon
+            className={styles.editIcon}
+            onClick={() => dispatch(setUpdateAction(user))}
+          />
+          {
+            isLoggedIn != _id &&
+            <DeleteIcon
+              className={styles.deleteIcon}
+              onClick={() => dispatch(setDeleteAction(user))}
+            />
+          }
+          
+        </div>
+      }
     </div>
   );
 };
 
 User.propTypes = {
   user: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.string.isRequired,
 };
