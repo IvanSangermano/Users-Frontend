@@ -26,7 +26,7 @@ export const Login = () => {
   }, []);
 
   const handleLogin = async () => {
-    if (!email || !password) return;
+    if (!email || !password) return alert('Email or Password incorrect');
     dispatch(login(email, password, history));
   };
 
